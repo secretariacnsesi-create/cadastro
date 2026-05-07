@@ -105,7 +105,7 @@
             transition: 0.3s;
         }
 
-        .btn-submit:hover { background: #007a2e; }
+        .btn-submit:hover { background: #007a2e; transform: translateY(-1px); }
 
         @media (max-width: 600px) { .grid > div { grid-column: span 12 !important; } }
     </style>
@@ -117,15 +117,9 @@
         <h1>2º Encontro Nacional dos Conselheiros Representantes dos Trabalhadores do Conselho Nacional do SESI e dos Conselhos Regionais do SESI</h1>
     </div>
 
-    <form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="784a60cf-b803-4955-a252-bd1c5c509c56">
-  <input type="text" name="name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-  <button type="submit">Submit</button>
-</form>
+    <form action="https://api.web3forms.com/submit" method="POST" id="fichaForm">
         
-        <input type="hidden" name="access_key" value="SUA-CHAVE-AQUI">
+        <input type="hidden" name="access_key" value="784a60cf-b803-4955-a252-bd1c5c509c56">
         <input type="hidden" name="subject" id="dynamicSubject" value="Ficha de Cadastro">
         <input type="hidden" name="from_name" value="Sistema de Cadastro SESI">
 
@@ -134,7 +128,7 @@
             <div class="grid">
                 <div class="field col-12">
                     <label>Nome do Conselheiro</label>
-                    <input type="text" name="Nome" id="nomeInput" required>
+                    <input type="text" name="Nome_Conselheiro" id="nomeInput" required placeholder="Nome completo">
                 </div>
                 <div class="field col-8">
                     <label>Central Sindical</label>
@@ -159,7 +153,7 @@
                 </div>
                 <div class="field col-6">
                     <label>Data de Nascimento</label>
-                    <input type="date" name="Nascimento">
+                    <input type="date" name="Data_Nascimento">
                 </div>
                 <div class="field col-12">
                     <label>Aeroporto de Origem</label>
@@ -169,14 +163,14 @@
         </div>
 
         <div class="section">
-            <div class="section-title">DADOS BANCÁRIOS (REEMBOLSO)</div>
+            <div class="section-title">DADOS BANCÁRIOS (PARA REEMBOLSO)</div>
             <div class="grid">
                 <div class="field col-8">
                     <label>Banco</label>
                     <input type="text" name="Banco">
                 </div>
                 <div class="field col-4">
-                    <label>Nº do Banco</label>
+                    <label>Código do Banco</label>
                     <input type="text" name="Cod_Banco">
                 </div>
                 <div class="field col-4">
@@ -188,7 +182,7 @@
                     <input type="text" name="Conta">
                 </div>
                 <div class="field col-4">
-                    <label>Tipo</label>
+                    <label>Tipo de Conta</label>
                     <select name="Tipo_Conta">
                         <option>Corrente</option>
                         <option>Poupança</option>
@@ -198,41 +192,59 @@
         </div>
 
         <div class="section">
+            <div class="section-title">CONTATOS</div>
+            <div class="grid">
+                <div class="field col-6">
+                    <label>Seu Telefone / WhatsApp</label>
+                    <input type="tel" name="Telefone_WhatsApp" required placeholder="(00) 00000-0000">
+                </div>
+                <div class="field col-6">
+                    <label>Seu E-mail</label>
+                    <input type="email" name="Email_Conselheiro" required>
+                </div>
+                <div class="field col-12">
+                    <label>Nome da Secretária (o) / Assistente</label>
+                    <input type="text" name="Nome_Secretaria">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
             <div class="section-title">SEGURANÇA E EMERGÊNCIA</div>
             <div class="logic-box">
-                <label>Gostaria de fornecer um contato para emergência?</label>
+                <label>Gostaria de fornecer um contato para emergência? <br><small>(Ficamos preocupados por aqui, informe caso aconteça alguma coisa)</small></label>
                 <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="Aviso_Emergencia" value="Sim" onclick="toggleEmergencia(true)"> Sim</label>
-                    <label class="radio-option"><input type="radio" name="Aviso_Emergencia" value="Não" checked onclick="toggleEmergencia(false)"> Não</label>
+                    <label class="radio-option"><input type="radio" name="Deseja_Emergencia" value="Sim" onclick="toggleEmergencia(true)"> Sim</label>
+                    <label class="radio-option"><input type="radio" name="Deseja_Emergencia" value="Não" checked onclick="toggleEmergencia(false)"> Não</label>
                 </div>
             </div>
             <div class="field">
                 <label>Nome e Telefone de Emergência</label>
-                <input type="text" name="Contato_Emergencia" id="emergenciaInput" disabled placeholder="Informe quem avisar se algo acontecer">
+                <input type="text" name="Contato_Emergencia" id="emergenciaInput" disabled placeholder="Quem devemos avisar?">
             </div>
         </div>
 
         <div class="section">
             <div class="section-title">INFORMAÇÕES DE SAÚDE</div>
             <div class="logic-box">
-                <label>Possui plano de saúde para o evento?</label>
+                <label>Possui plano de saúde para o período do evento?</label>
                 <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="Tem_Plano" value="Sim" onclick="toggleSaude(true)"> Sim</label>
-                    <label class="radio-option"><input type="radio" name="Tem_Plano" value="Não" checked onclick="toggleSaude(false)"> Não</label>
+                    <label class="radio-option"><input type="radio" name="Possui_Plano" value="Sim" onclick="toggleSaude(true)"> Sim</label>
+                    <label class="radio-option"><input type="radio" name="Possui_Plano" value="Não" checked onclick="toggleSaude(false)"> Não</label>
                 </div>
             </div>
             <div class="grid">
                 <div class="field col-6">
                     <label>Operadora</label>
-                    <input type="text" name="Plano_Qual" id="operadoraInput" disabled>
+                    <input type="text" name="Plano_Operadora" id="operadoraInput" disabled placeholder="Ex: Unimed">
                 </div>
                 <div class="field col-6">
                     <label>Nº Carteirinha</label>
-                    <input type="text" name="Plano_Num" id="carteirinhaInput" disabled>
+                    <input type="text" name="Plano_Carteirinha" id="carteirinhaInput" disabled>
                 </div>
                 <div class="field col-12">
-                    <label>Restrições / Necessidades Especiais</label>
-                    <input type="text" name="Restricoes" placeholder="Ex: Alergias, dieta, locomoção...">
+                    <label>Restrições Alimentares ou Necessidades Especiais</label>
+                    <textarea name="Mensagem_Restricoes" rows="2" placeholder="Informe se houver alguma alergia ou necessidade específica..."></textarea>
                 </div>
             </div>
         </div>
@@ -242,18 +254,30 @@
 </div>
 
 <script>
-    function toggleEmergencia(e) { document.getElementById('emergenciaInput').disabled = !e; }
-    function toggleSaude(e) { 
-        document.getElementById('operadoraInput').disabled = !e; 
-        document.getElementById('carteirinhaInput').disabled = !e; 
+    // Lógica para habilitar/desabilitar campos
+    function toggleEmergencia(enable) {
+        document.getElementById('emergenciaInput').disabled = !enable;
     }
 
-    const nome = document.getElementById('nomeInput');
-    const uf = document.getElementById('ufSelect');
-    const subj = document.getElementById('dynamicSubject');
+    function toggleSaude(enable) {
+        document.getElementById('operadoraInput').disabled = !enable;
+        document.getElementById('carteirinhaInput').disabled = !enable;
+    }
 
-    function upSubj() { subj.value = `${uf.value || 'UF'} - ${nome.value || 'Conselheiro'} - Ficha de Cadastro`; }
-    nome.oninput = upSubj; uf.onchange = upSubj;
+    // Gerar Assunto Dinâmico: UF - Nome - Ficha de Cadastro
+    const nomeInput = document.getElementById('nomeInput');
+    const ufSelect = document.getElementById('ufSelect');
+    const subjectInput = document.getElementById('dynamicSubject');
+
+    function updateSubject() {
+        const uf = ufSelect.value || "UF";
+        const nome = nomeInput.value || "Conselheiro";
+        subjectInput.value = `${uf} - ${nome} - Ficha de Cadastro`;
+    }
+
+    nomeInput.addEventListener('input', updateSubject);
+    ufSelect.addEventListener('change', updateSubject);
 </script>
+
 </body>
 </html>
