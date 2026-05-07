@@ -60,6 +60,7 @@
             margin-bottom: 15px;
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
@@ -67,6 +68,7 @@
         .col-8 { grid-column: span 8; }
         .col-6 { grid-column: span 6; }
         .col-4 { grid-column: span 4; }
+        .col-3 { grid-column: span 3; }
 
         .field { display: flex; flex-direction: column; gap: 5px; }
         label { font-size: 0.85rem; font-weight: 600; color: #444; }
@@ -76,6 +78,7 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 1rem;
+            transition: all 0.2s;
         }
 
         input:focus { border-color: var(--sesi-blue); outline: none; box-shadow: 0 0 0 3px rgba(0,74,153,0.1); }
@@ -128,11 +131,11 @@
             <div class="grid">
                 <div class="field col-12">
                     <label>Nome do Conselheiro</label>
-                    <input type="text" name="Nome_Conselheiro" id="nomeInput" required placeholder="Nome completo">
+                    <input type="text" name="Nome do Conselheiro" id="nomeInput" required placeholder="Nome completo">
                 </div>
                 <div class="field col-8">
                     <label>Central Sindical</label>
-                    <input type="text" name="Central_Sindical">
+                    <input type="text" name="Central Sindical">
                 </div>
                 <div class="field col-4">
                     <label>Estado (UF)</label>
@@ -147,35 +150,39 @@
                         <option>SP</option><option>SE</option><option>TO</option>
                     </select>
                 </div>
-                <div class="field col-6">
+                <div class="field col-4">
                     <label>CPF</label>
                     <input type="text" name="CPF" required placeholder="000.000.000-00">
                 </div>
-                <div class="field col-6">
+                <div class="field col-4">
+                    <label>RG</label>
+                    <input type="text" name="RG">
+                </div>
+                <div class="field col-4">
                     <label>Data de Nascimento</label>
-                    <input type="date" name="Data_Nascimento">
+                    <input type="date" name="Data de Nascimento">
                 </div>
                 <div class="field col-12">
-                    <label>Aeroporto de Origem</label>
-                    <input type="text" name="Aeroporto" placeholder="Ex: BSB - Brasília">
+                    <label>Aeroporto de origem</label>
+                    <input type="text" name="Aeroporto de origem" placeholder="Ex: BSB - Brasília">
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">DADOS BANCÁRIOS (PARA REEMBOLSO)</div>
+            <div class="section-title">DADOS BANCÁRIOS</div>
             <div class="grid">
                 <div class="field col-8">
                     <label>Banco</label>
                     <input type="text" name="Banco">
                 </div>
                 <div class="field col-4">
-                    <label>Código do Banco</label>
-                    <input type="text" name="Cod_Banco">
+                    <label>Nº do Banco</label>
+                    <input type="text" name="Nº do Banco">
                 </div>
                 <div class="field col-4">
                     <label>Agência</label>
-                    <input type="text" name="Agencia">
+                    <input type="text" name="Agência">
                 </div>
                 <div class="field col-4">
                     <label>Conta</label>
@@ -183,7 +190,7 @@
                 </div>
                 <div class="field col-4">
                     <label>Tipo de Conta</label>
-                    <select name="Tipo_Conta">
+                    <select name="Tipo de Conta">
                         <option>Corrente</option>
                         <option>Poupança</option>
                     </select>
@@ -195,16 +202,16 @@
             <div class="section-title">CONTATOS</div>
             <div class="grid">
                 <div class="field col-6">
-                    <label>Seu Telefone / WhatsApp</label>
-                    <input type="tel" name="Telefone_WhatsApp" required placeholder="(00) 00000-0000">
+                    <label>Telefones (WhatsApp)</label>
+                    <input type="tel" name="Telefones" required placeholder="(00) 00000-0000">
                 </div>
                 <div class="field col-6">
-                    <label>Seu E-mail</label>
-                    <input type="email" name="Email_Conselheiro" required>
+                    <label>E-mail</label>
+                    <input type="email" name="E-mail" required>
                 </div>
                 <div class="field col-12">
-                    <label>Nome da Secretária (o) / Assistente</label>
-                    <input type="text" name="Nome_Secretaria">
+                    <label>Secretária</label>
+                    <input type="text" name="Secretária" placeholder="Nome e telefone de contato">
                 </div>
             </div>
         </div>
@@ -212,71 +219,63 @@
         <div class="section">
             <div class="section-title">SEGURANÇA E EMERGÊNCIA</div>
             <div class="logic-box">
-                <label>Gostaria de fornecer um contato para emergência? <br><small>(Ficamos preocupados por aqui, informe caso aconteça alguma coisa)</small></label>
+                <label>Gostaria de fornecer um contato para emergência?</label>
                 <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="Deseja_Emergencia" value="Sim" onclick="toggleEmergencia(true)"> Sim</label>
-                    <label class="radio-option"><input type="radio" name="Deseja_Emergencia" value="Não" checked onclick="toggleEmergencia(false)"> Não</label>
+                    <label class="radio-option"><input type="radio" name="Fornecer contato emergência?" value="Sim" onclick="toggleEmergencia(true)"> Sim</label>
+                    <label class="radio-option"><input type="radio" name="Fornecer contato emergência?" value="Não" checked onclick="toggleEmergencia(false)"> Não</label>
                 </div>
             </div>
             <div class="field">
-                <label>Nome e Telefone de Emergência</label>
-                <input type="text" name="Contato_Emergencia" id="emergenciaInput" disabled placeholder="Quem devemos avisar?">
+                <label>Telefone para Emergência</label>
+                <input type="text" name="Telefone para Emergência" id="emergenciaInput" disabled placeholder="Nome e telefone de contato">
             </div>
         </div>
 
         <div class="section">
             <div class="section-title">INFORMAÇÕES DE SAÚDE</div>
             <div class="logic-box">
-                <label>Possui plano de saúde para o período do evento?</label>
+                <label>Possui plano de Saúde?</label>
                 <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="Possui_Plano" value="Sim" onclick="toggleSaude(true)"> Sim</label>
-                    <label class="radio-option"><input type="radio" name="Possui_Plano" value="Não" checked onclick="toggleSaude(false)"> Não</label>
+                    <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Sim" onclick="toggleSaude(true)"> Sim</label>
+                    <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Não" checked onclick="toggleSaude(false)"> Não</label>
                 </div>
             </div>
             <div class="grid">
                 <div class="field col-6">
-                    <label>Operadora</label>
-                    <input type="text" name="Plano_Operadora" id="operadoraInput" disabled placeholder="Ex: Unimed">
+                    <label>Operadora do Plano</label>
+                    <input type="text" name="Operadora do Plano" id="operadoraInput" disabled placeholder="Ex: Unimed">
                 </div>
                 <div class="field col-6">
-                    <label>Nº Carteirinha</label>
-                    <input type="text" name="Plano_Carteirinha" id="carteirinhaInput" disabled>
+                    <label>Nº da Carteirinha</label>
+                    <input type="text" name="Nº da Carteirinha" id="carteirinhaInput" disabled>
                 </div>
                 <div class="field col-12">
-                    <label>Restrições Alimentares ou Necessidades Especiais</label>
-                    <textarea name="Mensagem_Restricoes" rows="2" placeholder="Informe se houver alguma alergia ou necessidade específica..."></textarea>
+                    <label>Necessidades ou Restrições Alimentares</label>
+                    <textarea name="Restrições Alimentares" rows="2" placeholder="Descreva aqui se houver..."></textarea>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="btn-submit">FINALIZAR E ENVIAR PARA SECRETARIA</button>
+        <button type="submit" class="btn-submit">FINALIZAR E ENVIAR CADASTRO</button>
     </form>
 </div>
 
 <script>
-    // Lógica para habilitar/desabilitar campos
-    function toggleEmergencia(enable) {
-        document.getElementById('emergenciaInput').disabled = !enable;
+    function toggleEmergencia(enable) { document.getElementById('emergenciaInput').disabled = !enable; }
+    function toggleSaude(enable) { 
+        document.getElementById('operadoraInput').disabled = !enable; 
+        document.getElementById('carteirinhaInput').disabled = !enable; 
     }
 
-    function toggleSaude(enable) {
-        document.getElementById('operadoraInput').disabled = !enable;
-        document.getElementById('carteirinhaInput').disabled = !enable;
+    const nome = document.getElementById('nomeInput');
+    const uf = document.getElementById('ufSelect');
+    const subj = document.getElementById('dynamicSubject');
+
+    function updateSubject() { 
+        subj.value = `${uf.value || 'UF'} - ${nome.value || 'Conselheiro'} - Ficha de Cadastro`; 
     }
-
-    // Gerar Assunto Dinâmico: UF - Nome - Ficha de Cadastro
-    const nomeInput = document.getElementById('nomeInput');
-    const ufSelect = document.getElementById('ufSelect');
-    const subjectInput = document.getElementById('dynamicSubject');
-
-    function updateSubject() {
-        const uf = ufSelect.value || "UF";
-        const nome = nomeInput.value || "Conselheiro";
-        subjectInput.value = `${uf} - ${nome} - Ficha de Cadastro`;
-    }
-
-    nomeInput.addEventListener('input', updateSubject);
-    ufSelect.addEventListener('change', updateSubject);
+    nome.addEventListener('input', updateSubject);
+    uf.addEventListener('change', updateSubject);
 </script>
 
 </body>
