@@ -13,6 +13,7 @@
             --text: #1d1d1f;
             --border: #d1d1d6;
             --term-bg: #f8f9fa;
+            --info-blue: #e8f0fc;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,6 +65,17 @@
             text-transform: uppercase;
         }
 
+        .info-box {
+            background: var(--info-blue);
+            border: 1px solid var(--sesi-blue);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: var(--sesi-blue);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
         .col-12 { grid-column: span 12; }
         .col-8 { grid-column: span 8; }
@@ -102,9 +114,6 @@
             color: #555;
             margin-bottom: 15px;
         }
-
-        .terms-text ul { padding-left: 20px; margin-top: 10px; }
-        .terms-text li { margin-bottom: 8px; }
 
         .agree-check {
             display: flex;
@@ -151,7 +160,7 @@
         <input type="hidden" name="from_name" value="Sistema de Cadastro SESI">
 
         <div class="section">
-            <div class="section-title">1. IDENTIFICAÇÃO PESSOAL</div>
+            <div class="section-title">IDENTIFICAÇÃO PESSOAL</div>
             <div class="grid">
                 <div class="field col-12">
                     <label>Nome do Conselheiro</label>
@@ -194,7 +203,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">2. DADOS BANCÁRIOS</div>
+            <div class="section-title">DADOS BANCÁRIOS</div>
             <div class="grid">
                 <div class="field col-8">
                     <label>Banco</label>
@@ -223,7 +232,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">3. CONTATOS</div>
+            <div class="section-title">CONTATOS</div>
             <div class="grid">
                 <div class="field col-6">
                     <label>Telefones (WhatsApp)</label>
@@ -241,11 +250,11 @@
         </div>
 
         <div class="section">
-            <div class="section-title">4. SEGURANÇA E EMERGÊNCIA</div>
+            <div class="section-title">SEGURANÇA E EMERGÊNCIA</div>
             <label>Gostaria de fornecer um contato para emergência?</label>
             <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="Fornecer contato emergência?" value="Sim" onclick="document.getElementById('divEmergencia').style.display='block'; document.getElementById('emergenciaInput').required=true;"> Sim</label>
-                <label class="radio-option"><input type="radio" name="Fornecer contato emergência?" value="Não" checked onclick="document.getElementById('divEmergencia').style.display='none'; document.getElementById('emergenciaInput').required=false;"> Não</label>
+                <label class="radio-option"><input type="radio" name="Deseja informar contato emergência?" value="Sim" onclick="toggleEmergencia(true)"> Sim</label>
+                <label class="radio-option"><input type="radio" name="Deseja informar contato emergência?" value="Não" checked onclick="toggleEmergencia(false)"> Não</label>
             </div>
             
             <div class="field" id="divEmergencia" style="display:none; margin-top:10px;">
@@ -255,19 +264,21 @@
         </div>
 
         <div class="section">
-            <div class="section-title">5. INFORMAÇÕES DE SAÚDE</div>
+            <div class="section-title">INFORMAÇÕES DE SAÚDE</div>
             
+                        </div>
+
             <label>Possui plano de Saúde?</label>
             <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Sim" onclick="document.getElementById('divPlano').style.display='block';"> Sim</label>
-                <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Não" checked onclick="document.getElementById('divPlano').style.display='none'; document.getElementById('operadoraInput').required=false; document.getElementById('carteirinhaInput').required=false;"> Não</label>
+                <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Sim" onclick="handlePlanoBase(true)"> Sim</label>
+                <label class="radio-option"><input type="radio" name="Possui plano de Saúde?" value="Não" checked onclick="handlePlanoBase(false)"> Não</label>
             </div>
 
             <div id="divPlano" style="display:none; margin-top:10px;">
                 <label>Gostaria de fornecer os dados do seu plano para agilizar atendimentos?</label>
                 <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="Deseja informar dados do plano?" value="Sim" onclick="document.getElementById('gridPlano').style.display='grid'; document.getElementById('operadoraInput').required=true; document.getElementById('carteirinhaInput').required=true;"> Sim</label>
-                    <label class="radio-option"><input type="radio" name="Deseja informar dados do plano?" value="Não" checked onclick="document.getElementById('gridPlano').style.display='none'; document.getElementById('operadoraInput').required=false; document.getElementById('carteirinhaInput').required=false;"> Não</label>
+                    <label class="radio-option"><input type="radio" name="Deseja informar dados do plano?" value="Sim" onclick="handleNestedPlano(true)"> Sim</label>
+                    <label class="radio-option"><input type="radio" name="Deseja informar dados do plano?" value="Não" checked onclick="handleNestedPlano(false)"> Não</label>
                 </div>
 
                 <div class="grid" id="gridPlano" style="display:none; margin-top:15px;">
@@ -290,15 +301,18 @@
 
         <div class="terms-container">
             <div class="terms-text">
-                <strong>INFORMAÇÕES E TERMO DE CIÊNCIA:</strong>
-                <ul>
+                <strong>TERMO DE CIÊNCIA E RESPONSABILIDADE:</strong>
+                <p style="margin-top:10px;">Ao preencher e enviar esta ficha, o participante declara estar ciente de que:</p>
+                <ul style="padding-left:20px; margin-top:10px;">
                     <li>A organização poderá adotar protocolos de assistência e suporte médico durante o período oficial do evento.</li>
-                    <li>Na ausência de um contato de emergência ou plano de saúde privado informado, o participante declara ciência de que serão adotados os protocolos padrão de socorro e saúde.</li>
-                    <li>Os dados coletados serão utilizados exclusivamente para a logística de transporte, hospedagem e outras despesas deste evento, sendo armazenados de forma segura e descartados após a finalização dos trâmites administrativos, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</li>
+                    <li>Na ausência de um contato de emergência ou plano de saúde privado informado, serão adotados os protocolos padrão de socorro e saúde.</li>
+                    <li>As informações sobre o plano de saúde são coletadas exclusivamente para suporte médico emergencial durante o evento. Dados estritamente confidenciais e acessados apenas em caso de necessidade.</li>
+		    <li>Os dados coletados serão utilizados exclusivamente para a logística de transporte, hospedagem e outras despesas deste evento, sendo armazenados de forma segura e descartados após a finalização dos trâmites administrativos, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</li>
+
                 </ul>
             </div>
             <label class="agree-check">
-                <input type="checkbox" required name="Aceite_Termos"> DECLARO QUE LI E ESTOU CIENTE DAS INFORMAÇÕES ACIMA.
+                <input type="checkbox" required name="Termo de Aceite" value="O conselheiro leu e concorda"> DECLARO QUE LI E ESTOU CIENTE DAS INFORMAÇÕES ACIMA.
             </label>
         </div>
 
@@ -307,6 +321,32 @@
 </div>
 
 <script>
+    function toggleEmergencia(sim) {
+        const div = document.getElementById('divEmergencia');
+        const input = document.getElementById('emergenciaInput');
+        div.style.display = sim ? 'block' : 'none';
+        input.required = sim;
+    }
+
+    function handlePlanoBase(possui) {
+        const div = document.getElementById('divPlano');
+        div.style.display = possui ? 'block' : 'none';
+        if (!possui) {
+            handleNestedPlano(false);
+            // Resetar rádio aninhado
+            document.querySelectorAll('input[name="Deseja informar dados do plano?"]').forEach(r => r.checked = r.value === 'Não');
+        }
+    }
+
+    function handleNestedPlano(sim) {
+        const grid = document.getElementById('gridPlano');
+        const op = document.getElementById('operadoraInput');
+        const cart = document.getElementById('carteirinhaInput');
+        grid.style.display = sim ? 'grid' : 'none';
+        op.required = sim;
+        cart.required = sim;
+    }
+
     const nome = document.getElementById('nomeInput');
     const uf = document.getElementById('ufSelect');
     const subj = document.getElementById('dynamicSubject');
